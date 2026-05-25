@@ -1,0 +1,210 @@
+/* ==========================================================================
+   GOALS STYLES — STUDYFLOW PETROBRAS
+   Goals & Milestones styles
+   ========================================================================== */
+
+/* ==========================================================================
+   GOALS HEADER
+   ========================================================================== */
+.goals-header {
+  margin-bottom: 2rem;
+}
+
+.goals-header h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.goals-header p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   STREAK CARD
+   ========================================================================== */
+.streak-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.streak-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--color-b1);
+  margin-bottom: 0.5rem;
+}
+
+.streak-label {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.streak-tip {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   WEEKLY GOAL CARD
+   ========================================================================== */
+.weekly-goal-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.weekly-goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.weekly-goal-header h3 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.weekly-goal-progress {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.weekly-goal-circle {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.weekly-goal-circle svg {
+  transform: rotate(-90deg);
+}
+
+.weekly-goal-circle circle {
+  fill: none;
+  stroke-width: 8;
+}
+
+.weekly-goal-circle-bg {
+  stroke: var(--bg-tertiary);
+}
+
+.weekly-goal-circle-progress {
+  stroke: var(--color-b1);
+  stroke-dasharray: 314;
+  stroke-dashoffset: 314;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.weekly-goal-text {
+  flex: 1;
+}
+
+.weekly-goal-hours {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.weekly-goal-percent {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+/* ==========================================================================
+   MILESTONES BADGES
+   ========================================================================== */
+.milestones-section {
+  margin-top: 2rem;
+}
+
+.milestones-section h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.milestones-badges-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.badge-item {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+  transition: var(--transition-smooth);
+}
+
+.badge-item.unlocked {
+  border-color: var(--color-b1);
+  box-shadow: var(--shadow-neon);
+}
+
+.badge-item.locked {
+  opacity: 0.5;
+}
+
+.badge-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.badge-item.locked .badge-icon {
+  filter: grayscale(1);
+}
+
+.badge-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.badge-desc {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.badge-status {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+}
+
+.badge-item.unlocked .badge-status {
+  background: var(--color-success);
+  color: white;
+}
+
+.badge-item.locked .badge-status {
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+}

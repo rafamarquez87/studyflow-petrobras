@@ -1,0 +1,197 @@
+/* ==========================================================================
+   TIMER STYLES — STUDYFLOW PETROBRAS
+   Stopwatch & Pomodoro Timer styles
+   ========================================================================== */
+
+/* ==========================================================================
+   TIMER GRID
+   ========================================================================== */
+.timer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.timer-main {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+}
+
+.timer-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ==========================================================================
+   TIMER CLOCK
+   ========================================================================== */
+.timer-clock {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--color-b1);
+  margin: 1.5rem 0;
+  text-shadow: 0 0 30px rgba(0, 242, 254, 0.3);
+}
+
+.timer-sublabel {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+/* ==========================================================================
+   TIMER CONTROLS
+   ========================================================================== */
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.timer-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid var(--glass-border);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-btn:hover {
+  border-color: var(--color-b1);
+  background: var(--color-b1-grad);
+  color: var(--bg-primary);
+}
+
+.timer-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+}
+
+/* ==========================================================================
+   TIMER PRESETS
+   ========================================================================== */
+.preset-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.preset-card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.preset-card:hover {
+  border-color: var(--glass-border-hover);
+}
+
+.preset-card.active {
+  border-color: var(--color-b1);
+  background: var(--glass-bg);
+}
+
+.preset-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.preset-time {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   TIMER PROGRESS RING
+   ========================================================================== */
+.timer-progress-ring {
+  width: 280px;
+  height: 280px;
+  margin: 0 auto;
+  transform: rotate(-90deg);
+}
+
+.timer-progress-ring circle {
+  fill: none;
+  stroke-width: 8;
+}
+
+.timer-progress-ring-bg {
+  stroke: var(--bg-tertiary);
+}
+
+.timer-progress-ring-progress {
+  stroke: var(--color-b1);
+  stroke-dasharray: 628;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1s linear;
+}
+
+/* ==========================================================================
+   TIMER WIDGET (SIDEBAR)
+   ========================================================================== */
+.timer-widget {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.widget-timer-display {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-b1);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.widget-timer-state {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.widget-timer-action {
+  width: 100%;
+  background: var(--color-b1-grad);
+  color: var(--bg-primary);
+  border: none;
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.widget-timer-action:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-neon);
+}

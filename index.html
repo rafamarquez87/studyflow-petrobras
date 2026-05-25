@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyFlow Petrobras — Gestor Inteligente de Estudos</title>
+  <meta name="description" content="Gestor inteligente e interativo de estudos para o concurso da Petrobras Elétrica (Equipamentos Júnior). Acompanhe horas, simulados, notas e veja recomendações automáticas de foco baseadas nas provas de 2014 e 2018.">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Application JavaScript -->
+  <script src="app.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- ==========================================================================
+         SIDEBAR NAVIGATION
+         ========================================================================== -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="logo-icon">⚡</div>
+        <div class="logo-text">
+          StudyFlow
+          <span class="logo-sub">Petrobras Elétrica</span>
+        </div>
+      </div>
+      
+      <nav class="nav-list">
+        <li class="nav-link active" id="nav-dashboard" onclick="switchView('dashboard')">
+          <svg viewBox="0 0 24 24" style="width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2;"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          <span class="nav-text">Dashboard</span>
+        </li>
+        <li class="nav-link" id="nav-matrix" onclick="switchView('matrix')">
+          <svg viewBox="0 0 24 24" style="width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5A2.5 2.5 0 0 1 6.5 2.5H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg>
+          <span class="nav-text">Grade de Matérias</span>
+        </li>
+        <li class="nav-link" id="nav-timer" onclick="switchView('timer')">
+          <svg viewBox="0 0 24 24" style="width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="nav-text">Foco & Pomodoro</span>
+        </li>
+        <li class="nav-link" id="nav-history" onclick="switchView('history')">
+          <svg viewBox="0 0 24 24" style="width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2;"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span class="nav-text">Lançamentos</span>
+        </li>
+        <li class="nav-link" id="nav-goals" onclick="switchView('goals')">
+          <svg viewBox="0 0 24 24" style="width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span class="nav-text">Metas & Conquistas</span>
+        </li>
+        <li class="nav-link" id="nav-settings" onclick="switchView('settings')">
+          <svg viewBox="0 0 24 24" style="width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          <span class="nav-text">Configurações</span>
+        </li>
+      </nav>
+      
+      <!-- Mini Pomodoro Widget -->
+      <div class="sidebar-widget">
+        <div class="widget-title" id="widget-timer-state">Cronômetro</div>
+        <div class="widget-time" id="widget-timer-display">00:00</div>
+        <button class="widget-btn" id="widget-timer-action" onclick="togglePlayPauseFromWidget()">Iniciar Foco</button>
+      </div>
+    </aside>
+
+    <!-- ==========================================================================
+         MAIN WRAPPER
+         ========================================================================== -->
+    <main class="main-wrapper">
+      
+      <!-- Top Bar / Header -->
+      <header class="top-bar">
+        <div class="page-title-group">
+          <h1 id="main-view-title">Dashboard</h1>
+          <p id="main-view-subtitle">Guia analítico de preparação Petrobras PSP.</p>
+        </div>
+        
+        <div style="display:flex; align-items:center; gap:12px;">
+          <!-- Theme Toggle Button -->
+          <button id="theme-toggle-btn" onclick="toggleTheme()" style="width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--bg-secondary); border:1px solid var(--glass-border); cursor:pointer; color:var(--text-primary); transition:var(--transition-smooth);" title="Alternar Tema">
+            <svg id="theme-toggle-icon" viewBox="0 0 24 24" style="width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2;"><path id="theme-toggle-path" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707M12 7a5 5 0 100 10 5 5 0 000-10z"/></svg>
+          </button>
+          
+          <div class="user-status-pill">
+            <span class="status-dot"></span>
+            <span id="user-status-text">Pronto para estudar</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- ==========================================================================
+           VIEW 1: DASHBOARD
+           ========================================================================== -->
+      <section id="view-dashboard" class="view-section active">
+        <!-- Planejamento de Cronograma Reta Final -->
+        <div class="glass-panel schedule-card animated">
+          <div class="panel-header" style="margin-bottom: 1rem;">
+            <span class="panel-title">
+              <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:var(--color-b1); stroke-width:2;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Cronograma e Planejamento Reta Final
+            </span>
+            <span class="rec-badge-info" id="schedule-status-badge">Metas Inteligentes</span>
+          </div>
+          <div class="schedule-grid">
+            <div class="schedule-input-group">
+              <label for="schedule-exam-date">Data da Prova</label>
+              <input type="date" id="schedule-exam-date" class="form-control" onchange="updateSchedule()">
+            </div>
+            <div class="schedule-input-group">
+              <label for="schedule-daily-hours">Carga Horária Diária (Horas)</label>
+              <input type="number" id="schedule-daily-hours" class="form-control" min="0.5" max="24" step="0.5" value="3.0" oninput="updateSchedule()">
+            </div>
+            <div class="schedule-stat">
+              <div class="schedule-stat-num" id="schedule-days-left">--</div>
+              <div class="schedule-stat-lbl">Dias Restantes</div>
+            </div>
+            <div class="schedule-stat">
+              <div class="schedule-stat-num" id="schedule-total-hours">--</div>
+              <div class="schedule-stat-lbl">Horas de Estudo</div>
+            </div>
+          </div>
+          <!-- Selection of study days -->
+          <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
+            <label style="display:block; font-size:0.75rem; color:var(--text-secondary); margin-bottom:10px; font-weight:600;">Dias da Semana para Estudar:</label>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;" id="schedule-days-container">
+              <button class="filter-tab" id="day-btn-SEG" onclick="toggleStudyDay('SEG')">Seg</button>
+              <button class="filter-tab" id="day-btn-TER" onclick="toggleStudyDay('TER')">Ter</button>
+              <button class="filter-tab" id="day-btn-QUA" onclick="toggleStudyDay('QUA')">Qua</button>
+              <button class="filter-tab" id="day-btn-QUI" onclick="toggleStudyDay('QUI')">Qui</button>
+              <button class="filter-tab" id="day-btn-SEX" onclick="toggleStudyDay('SEX')">Sex</button>
+              <button class="filter-tab" id="day-btn-SÁB" onclick="toggleStudyDay('SÁB')">Sáb</button>
+              <button class="filter-tab" id="day-btn-DOM" onclick="toggleStudyDay('DOM')">Dom</button>
+            </div>
+          </div>
+          <!-- Countdown to Exam -->
+          <div class="countdown-wrap" id="countdown-wrap">
+            <div class="countdown-label-main">⏳ Contagem Regressiva para a Prova</div>
+            <div class="countdown-grid">
+              <div class="countdown-unit"><div class="countdown-num" id="cd-days">--</div><div class="countdown-lbl">Dias</div></div>
+              <div class="countdown-sep">:</div>
+              <div class="countdown-unit"><div class="countdown-num" id="cd-hours">--</div><div class="countdown-lbl">Horas</div></div>
+              <div class="countdown-sep">:</div>
+              <div class="countdown-unit"><div class="countdown-num" id="cd-mins">--</div><div class="countdown-lbl">Min</div></div>
+              <div class="countdown-sep">:</div>
+              <div class="countdown-unit"><div class="countdown-num" id="cd-secs">--</div><div class="countdown-lbl">Seg</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="metrics-grid">
+          <div class="metric-card accent-b1">
+            <div class="metric-label">Tempo Total Estudado</div>
+            <div class="metric-value" id="stat-total-hours">0h</div>
+            <div class="metric-subtext">Meta recomendada: 200h+</div>
+          </div>
+          <div class="metric-card accent-b2">
+            <div class="metric-label">Média Geral de Acertos</div>
+            <div class="metric-value" id="stat-average-grade">0%</div>
+            <div class="metric-subtext" id="stat-average-grade-sub">Baseado em simulados</div>
+          </div>
+          <div class="metric-card accent-b3">
+            <div class="metric-label">Questões Resolvidas</div>
+            <div class="metric-value" id="stat-total-questions">0</div>
+            <div class="metric-subtext" id="stat-questions-correct">0 acertos</div>
+          </div>
+          <div class="metric-card accent-basicas">
+            <div class="metric-label">Matérias Iniciadas</div>
+            <div class="metric-value" id="stat-started-subjects">0/25</div>
+            <div class="metric-subtext">Falta pouco para cobrir o edital</div>
+          </div>
+        </div>
+
+        <!-- Onde Focar Agora (Smart Recommendations) -->
+        <div class="rec-title-wrap">
+          <h2>🎯 Recomendações de Foco Imediato</h2>
+          <span class="rec-badge-info">Algoritmo INE ativo</span>
+        </div>
+        <div class="rec-container" id="recommendations-container">
+          <!-- Dynamically filled by JS -->
+        </div>
+
+        <!-- Charts Layout -->
+        <div class="layout-2col">
+          <!-- Spider Chart (Radar) on Blocks -->
+          <div class="glass-panel">
+            <div class="panel-header">
+              <span class="panel-title">
+                <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:var(--color-b1); stroke-width:2;"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/></svg>
+                Equilíbrio de Estudos por Bloco (Horas)
+              </span>
+            </div>
+            <div class="chart-container">
+              <canvas id="chart-radar-blocks"></canvas>
+            </div>
+          </div>
+          
+          <!-- Focus / Target comparison -->
+          <div class="glass-panel">
+            <div class="panel-header">
+              <span class="panel-title">
+                <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:var(--color-b1); stroke-width:2;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                Desempenho Geral por Bloco (%)
+              </span>
+            </div>
+            <div class="chart-container">
+              <canvas id="chart-doughnut-grades"></canvas>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Detailed Comparison Chart -->
+        <div class="glass-panel" style="margin-bottom: 2.5rem;">
+          <div class="panel-header">
+            <span class="panel-title">
+              <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:var(--color-b1); stroke-width:2;"><path d="M21.21 15.89A10 10 0 118 2.83M22 12A10 10 0 0012 2v10z"/></svg>
+              Tempo Estudado vs. Desempenho por Assunto
+            </span>
+          </div>
+          <div class="chart-container" style="height: 380px;">
+            <canvas id="chart-bar-comparison"></canvas>
+          </div>
+        </div>
+
+        <!-- Evolução Temporal -->
+        <div class="glass-panel animated" style="margin-bottom: 2.5rem;">
+          <div class="panel-header">
+            <span class="panel-title">
+              <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:var(--color-b1); stroke-width:2;"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Evolução de Horas Estudadas
+            </span>
+            <span class="rec-badge-info">Acumulado por dia</span>
+          </div>
+          <div class="chart-container" style="height: 260px;">
+            <canvas id="chart-evolution"></canvas>
+          </div>
+        </div>
+
+        <!-- Plano Semanal -->
+        <div class="glass-panel animated" style="margin-bottom: 2.5rem;">
+          <div class="panel-header" style="margin-bottom: 1.5rem;">
+            <span class="panel-title">
+              <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:var(--color-b1); stroke-width:2;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Plano de Estudos — Semana Atual
+            </span>
+            <span class="rec-badge-info" id="weekly-plan-total">-- h esta semana</span>
+          </div>
+          <div class="weekly-plan-grid" id="weekly-plan-container">
+            <!-- Dynamically populated by JS -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ==========================================================================
+           VIEW 2: SYLLABUS MATRIX (GRADE DE MATÉRIAS)
+           ========================================================================== -->
+      <section id="view-matrix" class="view-section">
+        <div class="glass-panel">
+          <div class="matrix-toolbar">
+            <div class="search-input-wrap">
+              <svg viewBox="0 0 24 24" style="width:18px; height:18px; stroke:var(--text-muted); fill:none; stroke-width:2;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="subject-search" class="search-input" placeholder="Buscar assunto..." oninput="filterSubjects()">
+            </div>
+            
+            <div class="filter-tabs" id="subject-filter-tabs">
+              <button class="filter-tab active" onclick="setMatrixFilter('all')">Todos</button>
+              <button class="filter-tab" onclick="setMatrixFilter('Bloco 1')">Bloco 1</button>
+              <button class="filter-tab" onclick="setMatrixFilter('Bloco 2')">Bloco 2</button>
+              <button class="filter-tab" onclick="setMatrixFilter('Bloco 3')">Bloco 3</button>
+              <button class="filter-tab" onclick="setMatrixFilter('Básico')">Básicas</button>
+            </div>
+
+            <!-- Priority Filter Row -->
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:10px; padding-top:10px; border-top:1px solid var(--glass-border);">
+              <span style="font-size:0.7rem; font-weight:600; color:var(--text-secondary); white-space:nowrap;">🎯 Prioridade:</span>
+              <div class="filter-tabs" id="priority-filter-tabs" style="gap:6px;">
+                <button class="filter-tab active" id="pri-btn-all" onclick="setPriorityFilter('all')">Todas</button>
+                <button class="filter-tab pri-btn-alta" id="pri-btn-alta" onclick="setPriorityFilter('Alta')">
+                  <svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:3;"><polyline points="18 15 12 9 6 15"/></svg>
+                  Alta
+                </button>
+                <button class="filter-tab pri-btn-media" id="pri-btn-media" onclick="setPriorityFilter('Média')">
+                  <svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:3;"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Média
+                </button>
+                <button class="filter-tab pri-btn-baixa" id="pri-btn-baixa" onclick="setPriorityFilter('Baixa')">
+                  <svg viewBox="0 0 24 24" style="width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:3;"><polyline points="6 9 12 15 18 9"/></svg>
+                  Baixa
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subjects list -->
+          <div class="subject-list" id="subject-list-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           VIEW 3: INTEGRATED TIMER (FOCO & POMODORO)
+           ========================================================================== -->
+      <section id="view-timer" class="view-section">
+        <div class="timer-grid">
+          
+          <!-- Timer Main Panel -->
+          <div class="glass-panel timer-main-card">
+            <div class="timer-subject-select">
+              <label for="timer-subject-dropdown" style="display:block; margin-bottom:8px; font-weight:600; color:var(--text-secondary);">Matéria em Foco:</label>
+              <select id="timer-subject-dropdown" class="form-control" style="width: 100%;">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+            
+            <!-- SVG Circular Timer -->
+            <div class="circle-timer-wrap">
+              <svg class="circle-timer-svg" width="240" height="240" viewBox="0 0 240 240">
+                <circle class="circle-timer-bg" cx="120" cy="120" r="100"/>
+                <circle id="timer-progress-ring" class="circle-timer-fg" cx="120" cy="120" r="100"/>
+              </svg>
+              
+              <div style="position: relative; z-index: 5;">
+                <div class="timer-digits" id="timer-clock">25:00</div>
+                <div class="timer-label" id="timer-sublabel">Pomodoro</div>
+              </div>
+            </div>
+            
+            <!-- Controls -->
+            <div class="timer-controls">
+              <!-- Reset button -->
+              <button class="btn-timer" id="btn-timer-reset" onclick="resetTimer()" title="Reiniciar cronômetro">
+                <svg viewBox="0 0 24 24" style="width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2;"><path d="M2.5 2v6h6M21.5 22v-6h-6"/><path d="M22 11.5A10 10 0 003.2 7.2L2.5 8M2 12.5a10 10 0 0018.8 4.3l.7-.8"/></svg>
+              </button>
+              
+              <!-- Play / Pause -->
+              <button class="btn-timer btn-play-pause" id="btn-timer-toggle" onclick="toggleTimer()" title="Iniciar/Pausar">
+                <svg id="play-pause-icon" viewBox="0 0 24 24" style="width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </button>
+              
+              <!-- Conclude and save study -->
+              <button class="btn-timer" id="btn-timer-save" onclick="completeTimerSession()" title="Concluir sessão e salvar">
+                <svg viewBox="0 0 24 24" style="width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2;"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Timer Options & Sound synth -->
+          <div style="display:flex; flex-direction:column; gap:1.5rem;">
+            
+            <!-- Preset Selection -->
+            <div class="glass-panel">
+              <h3 style="font-size:1rem; margin-bottom:1rem; color:var(--text-primary);">Configurar Timer</h3>
+              
+              <div class="presets-container">
+                <div class="preset-card active" id="preset-pomodoro" onclick="selectPreset('pomodoro', 25)">
+                  <span class="preset-name">Pomodoro Tradicional</span>
+                  <span class="preset-dur">25 min</span>
+                </div>
+                <div class="preset-card" id="preset-long" onclick="selectPreset('long', 50)">
+                  <span class="preset-name">Foco Profundo</span>
+                  <span class="preset-dur">50 min</span>
+                </div>
+                <div class="preset-card" id="preset-short" onclick="selectPreset('short', 15)">
+                  <span class="preset-name">Estudo Rápido</span>
+                  <span class="preset-dur">15 min</span>
+                </div>
+                <div class="preset-card" id="preset-stopwatch" onclick="selectPreset('stopwatch', 0)">
+                  <span class="preset-name">Cronômetro Livre</span>
+                  <span class="preset-dur">Livre</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Sound Synth (Rain/Noise generator) -->
+            <div class="glass-panel">
+              <h3 style="font-size:1rem; margin-bottom:0.8rem; color:var(--text-primary);">Sons Ambientais de Foco</h3>
+              <p style="font-size:0.75rem; color:var(--text-secondary); margin-bottom:1.2rem;">Sintetizador acústico local (offline) para aumentar a concentração.</p>
+              
+              <button class="btn-primary" id="btn-ambient-sound" onclick="toggleAmbientNoise()" style="background:var(--bg-tertiary); border:1px solid var(--glass-border); color:var(--text-primary);">
+                <svg viewBox="0 0 24 24" style="width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.5;"><path d="M12 2v20M17 5v14M22 9v6M7 8v8M2 10v4"/></svg>
+                <span id="ambient-sound-text">Ativar Ruído Branco</span>
+              </button>
+            </div>
+            
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           VIEW 4: LOGS & HISTORY
+           ========================================================================== -->
+      <section id="view-history" class="view-section">
+        <div class="layout-2col">
+          
+          <!-- Add log Forms -->
+          <div style="display:flex; flex-direction:column; gap:1.5rem;">
+            <!-- Study time form -->
+            <div class="glass-panel">
+              <h3 class="panel-title" style="margin-bottom:1.2rem;">
+                <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:var(--color-b1); stroke-width:2;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Lançar Tempo de Estudo Manual
+              </h3>
+              
+              <form id="form-study-log" onsubmit="handleStudySubmit(event)">
+                <div class="form-group" style="margin-bottom: 1rem;">
+                  <label for="study-subject">Matéria</label>
+                  <select id="study-subject" class="form-control" required></select>
+                </div>
+                
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="study-hours">Horas</label>
+                    <input type="number" id="study-hours" class="form-control" min="0" value="0" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="study-minutes">Minutos</label>
+                    <input type="number" id="study-minutes" class="form-control" min="0" max="59" value="30" required>
+                  </div>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 1.2rem;">
+                  <label for="study-comment">Comentário / Detalhes</label>
+                  <input type="text" id="study-comment" class="form-control" placeholder="Ex: Li a teoria do livro Chapman">
+                </div>
+                
+                <button type="submit" class="btn-primary">Registrar Estudo</button>
+              </form>
+            </div>
+            
+            <!-- Quiz Grade Form -->
+            <div class="glass-panel">
+              <h3 class="panel-title" style="margin-bottom:1.2rem;">
+                <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:var(--color-b1); stroke-width:2;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                Registrar Desempenho (Questões)
+              </h3>
+              
+              <form id="form-grade-log" onsubmit="handleGradeSubmit(event)">
+                <div class="form-group" style="margin-bottom: 1rem;">
+                  <label for="grade-subject">Matéria</label>
+                  <select id="grade-subject" class="form-control" required></select>
+                </div>
+                
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="grade-correct">Questões Corretas</label>
+                    <input type="number" id="grade-correct" class="form-control" min="0" value="8" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="grade-total">Total Respondido</label>
+                    <input type="number" id="grade-total" class="form-control" min="1" value="10" required>
+                  </div>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 1.2rem;">
+                  <label for="grade-comment">Identificador / Prova</label>
+                  <input type="text" id="grade-comment" class="form-control" placeholder="Ex: Simulado CESGRANRIO 2018">
+                </div>
+                
+                <button type="submit" class="btn-primary" style="background:var(--color-basicas-grad); color:var(--bg-primary);">Registrar Nota</button>
+              </form>
+            </div>
+          </div>
+          
+          <!-- History Log Table -->
+          <div class="glass-panel" style="display:flex; flex-direction:column;">
+            <div class="panel-header">
+              <span class="panel-title">
+                <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:var(--color-b1); stroke-width:2;"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Histórico de Lançamentos
+              </span>
+              <button class="btn-outline" style="padding: 4px 10px; font-size: 0.75rem;" onclick="clearAllLogs()">Limpar Tudo</button>
+            </div>
+            
+            <div class="table-wrap" style="flex: 1;">
+              <table class="history-table">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Tipo</th>
+                    <th>Matéria</th>
+                    <th>Valor / Registro</th>
+                    <th>Detalhe</th>
+                    <th>Ação</th>
+                  </tr>
+                </thead>
+                <tbody id="history-log-tbody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           VIEW 5: GOALS & MILESTONES (METAS & CONQUISTAS)
+           ========================================================================== -->
+      <section id="view-goals" class="view-section">
+        <div class="layout-2col">
+          
+          <!-- Streaks and Weekly Goal -->
+          <div style="display:flex; flex-direction:column; gap:1.5rem;">
+            
+            <!-- Streak Card -->
+            <div class="glass-panel text-center" style="padding:2rem; text-align:center;">
+              <div style="font-size:3rem; margin-bottom:0.5rem;">🔥</div>
+              <h3 style="font-size:1.8rem; font-weight:800; margin-bottom:0.2rem;" id="goals-streak-count">0 Dias</h3>
+              <p style="color:var(--text-secondary); font-size:0.85rem;">Sequência de estudos diários seguidos.</p>
+              <div style="margin-top:1.2rem; font-size:0.75rem; font-family:'JetBrains Mono', monospace; color:var(--color-b1);" id="goals-streak-tip">
+                Mantenha a sequência ativa estudando todos os dias!
+              </div>
+            </div>
+            
+            <!-- Weekly Goal Circle Progress -->
+            <div class="glass-panel" style="padding:1.5rem;">
+              <h3 class="panel-title" style="margin-bottom:1.5rem;">
+                <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:var(--color-b1); stroke-width:2;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                Meta de Estudo Semanal
+              </h3>
+              
+              <div class="circles-row" style="justify-content:center; gap:20px; padding: 1rem 0;">
+                <div class="circle-item">
+                  <div class="circle-wrap" style="width:120px; height:120px; margin: 0 auto 12px; position:relative;">
+                    <svg width="120" height="120" viewBox="0 0 120 120" style="transform:rotate(-90deg);">
+                      <circle class="circle-bg" cx="60" cy="60" r="50" style="stroke:var(--bg-tertiary); fill:none; stroke-width:8;"/>
+                      <circle id="goals-weekly-progress" class="circle-fg" cx="60" cy="60" r="50" style="stroke:var(--color-b1); fill:none; stroke-width:8; stroke-linecap:round; transition:stroke-dashoffset 1s ease; stroke-dasharray:314.16; stroke-dashoffset:314.16;"/>
+                    </svg>
+                    <div class="circle-inner" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                      <span class="circle-val" id="goals-weekly-hours" style="font-size:24px; font-weight:700; color:var(--text-primary);">0.0h</span>
+                      <span class="circle-unit" id="goals-weekly-target" style="font-size:10px; color:var(--text-secondary);">de 21h</span>
+                    </div>
+                  </div>
+                  <div class="circle-label" id="goals-weekly-percent" style="font-weight:700; color:var(--color-b1); font-size:0.9rem;">0% Concluído</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Milestone Badges Panel -->
+          <div class="glass-panel">
+            <h3 class="panel-title" style="margin-bottom:1.5rem;">
+              <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:var(--color-b1); stroke-width:2;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Conquistas Desbloqueadas (Milestones)
+            </h3>
+            
+            <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:1rem;" id="milestones-badges-container">
+              <!-- Dynamically populated badges -->
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           VIEW 6: SETTINGS
+           ========================================================================== -->
+      <section id="view-settings" class="view-section">
+        <div class="glass-panel" style="max-width: 600px; margin: 0 auto;">
+          <h2 class="panel-title" style="margin-bottom: 1.5rem; font-size: 1.25rem;">
+            <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:var(--color-b1); stroke-width:2;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            Configurações e Backup
+          </h2>
+          
+          <div style="display:flex; flex-direction:column; gap:1.5rem;">
+            <!-- Profile Settings -->
+            <div>
+              <h3 style="font-size:1rem; margin-bottom:0.8rem;">Perfil do Estudante</h3>
+              <div style="display:flex; align-items:center; gap:15px; margin-bottom:1rem;">
+                <div style="position:relative; width:64px; height:64px; border-radius:50%; background:var(--bg-tertiary); display:flex; align-items:center; justify-content:center; border:2px solid var(--color-b1); font-size:2rem; cursor:pointer;" onclick="changeAvatar()" id="settings-avatar-preview" title="Clique para mudar o Avatar">
+                  👤
+                </div>
+                <div style="flex:1;">
+                  <label for="settings-username" style="display:block; font-size:0.75rem; color:var(--text-secondary); margin-bottom:4px; font-weight:600;">Nome de Usuário</label>
+                  <input type="text" id="settings-username" class="form-control" placeholder="Estudante StudyFlow" oninput="saveProfile()" style="max-width:240px; background:var(--bg-secondary); border:1px solid var(--glass-border); padding:8px 12px; border-radius:var(--radius-sm); outline:none;">
+                </div>
+              </div>
+            </div>
+            
+            <hr style="border:none; border-top:1px solid var(--glass-border);">
+            
+            <!-- Appearance Preferences -->
+            <div>
+              <h3 style="font-size:1rem; margin-bottom:0.8rem;">Preferências e Aparência</h3>
+              <div style="display:flex; flex-direction:column; gap:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div>
+                    <h4 style="font-size:0.85rem; font-weight:600; margin:0;">Tema Escuro</h4>
+                    <p style="font-size:0.75rem; color:var(--text-secondary); margin:0;">Alternar entre modo escuro premium e modo claro.</p>
+                  </div>
+                  <button class="btn-outline" onclick="toggleTheme()" style="padding:6px 12px; font-size:0.75rem;" id="settings-theme-btn">Modo Claro</button>
+                </div>
+                
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div>
+                    <h4 style="font-size:0.85rem; font-weight:600; margin:0;">Notificações Sonoras</h4>
+                    <p style="font-size:0.75rem; color:var(--text-secondary); margin:0;">Tocar alertas ao concluir sessões do Pomodoro.</p>
+                  </div>
+                  <input type="checkbox" id="settings-notif" onchange="saveProfile()" checked style="width:18px; height:18px; cursor:pointer;">
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <div>
+                    <h4 style="font-size:0.85rem; font-weight:600; margin:0;">Relatório PDF</h4>
+                    <p style="font-size:0.75rem; color:var(--text-secondary); margin:0;">Baixar resumo de desempenho acadêmico.</p>
+                  </div>
+                  <button class="btn-outline" onclick="exportToPDF()" style="padding:6px 12px; font-size:0.75rem; border-color:var(--color-b1); color:var(--color-b1);">Imprimir / PDF</button>
+                </div>
+              </div>
+            </div>
+            
+            <hr style="border:none; border-top:1px solid var(--glass-border);">
+            
+            <div>
+              <h3 style="font-size:1rem; margin-bottom:0.5rem;">Resetar Dados</h3>
+              <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:1rem;">Restaura os dados originais sugeridos com dados fictícios de teste, ou zera todo o progresso para iniciar uma rotina nova.</p>
+              <div style="display:flex; gap:10px;">
+                <button class="btn-outline" style="border-color:var(--color-danger); color:var(--color-danger);" onclick="resetData('clear')">Zerar Todo Progresso</button>
+                <button class="btn-outline" onclick="resetData('mock')">Carregar Dados de Exemplo</button>
+              </div>
+            </div>
+            
+            <hr style="border:none; border-top:1px solid var(--glass-border);">
+            
+            <div>
+              <h3 style="font-size:1rem; margin-bottom:0.5rem;">Exportar & Importar Dados</h3>
+              <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:1rem;">Faça backup de todo o seu progresso de estudos local em formato JSON.</p>
+              <div style="display:flex; gap:10px; margin-bottom:1rem;">
+                <button class="btn-outline" onclick="exportData()">Exportar JSON</button>
+                <button class="btn-outline" onclick="triggerImport()">Importar JSON</button>
+                <input type="file" id="import-file-input" style="display:none;" onchange="importData(event)">
+              </div>
+            </div>
+            
+            <hr style="border:none; border-top:1px solid var(--glass-border);">
+            
+            <div>
+              <h3 style="font-size:1rem; margin-bottom:0.5rem;">Sobre a Plataforma</h3>
+              <p style="font-size:0.8rem; color:var(--text-secondary); line-height:1.5;">
+                O <strong>StudyFlow Petrobras Elétrica</strong> foi desenhado de forma customizada para concurseiros da área elétrica. O motor inteligente prioriza temas com base no edital, incidência em provas da banca <strong>CESGRANRIO</strong> e nas fraquezas de acertos do próprio estudante.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer area -->
+      <footer style="margin-top:auto; padding:2rem 0; border-top:1px solid var(--glass-border); display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; color:var(--text-muted); font-family:'JetBrains Mono', monospace;">
+        <span>StudyFlow v1.0.0 — Petrobras PSP Elétrica</span>
+        <span>Análise CESGRANRIO 2014 & 2018 integrada</span>
+      </footer>
+    </main>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL POPUPS
+       ========================================================================== -->
+  <!-- Study Log Modal Quick Action -->
+  <div class="modal-overlay" id="modal-quick-study">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-study-title" style="font-size:1.1rem;">Registrar Estudo</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-quick-study')">&times;</button>
+      </div>
+      <form onsubmit="handleQuickStudySubmit(event)">
+        <input type="hidden" id="quick-study-subj-id">
+        <div class="form-group" style="margin-bottom:1rem;">
+          <label>Matéria selecionada</label>
+          <input type="text" id="quick-study-subj-name" class="form-control" readonly style="opacity:0.8;">
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="quick-study-hours">Horas</label>
+            <input type="number" id="quick-study-hours" class="form-control" min="0" value="1" required>
+          </div>
+          <div class="form-group">
+            <label for="quick-study-minutes">Minutos</label>
+            <input type="number" id="quick-study-minutes" class="form-control" min="0" max="59" value="0" required>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:1.5rem;">
+          <label for="quick-study-comment">Anotações / Tópico</label>
+          <input type="text" id="quick-study-comment" class="form-control" placeholder="Opcional. Ex: Estudo de fórmulas.">
+        </div>
+        <button type="submit" class="btn-primary">Salvar Sessão</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Grade Log Modal Quick Action -->
+  <div class="modal-overlay" id="modal-quick-grade">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-grade-title" style="font-size:1.1rem;">Registrar Nota / Simulado</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-quick-grade')">&times;</button>
+      </div>
+      <form onsubmit="handleQuickGradeSubmit(event)">
+        <input type="hidden" id="quick-grade-subj-id">
+        <div class="form-group" style="margin-bottom:1rem;">
+          <label>Matéria selecionada</label>
+          <input type="text" id="quick-grade-subj-name" class="form-control" readonly style="opacity:0.8;">
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="quick-grade-correct">Acertos</label>
+            <input type="number" id="quick-grade-correct" class="form-control" min="0" value="7" required>
+          </div>
+          <div class="form-group">
+            <label for="quick-grade-total">Total Questões</label>
+            <input type="number" id="quick-grade-total" class="form-control" min="1" value="10" required>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:1.5rem;">
+          <label for="quick-grade-comment">Detalhes do Quiz / Prova</label>
+          <input type="text" id="quick-grade-comment" class="form-control" placeholder="Opcional. Ex: Questões resolvidas no QConcursos.">
+        </div>
+        <button type="submit" class="btn-primary" style="background:var(--color-basicas-grad); color:var(--bg-primary);">Salvar Nota</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Timer Completion Modal Prompt -->
+  <div class="modal-overlay" id="modal-timer-complete">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="font-size:1.1rem; color:var(--color-b1);">🎉 Parabéns! Foco Concluído!</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-timer-complete')">&times;</button>
+      </div>
+      <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:1.2rem;">
+        Você concluiu sua sessão de estudo de <strong id="timer-complete-duration">0</strong>. Deseja registrar este tempo em sua grade de matérias?
+      </p>
+      
+      <div class="form-group" style="margin-bottom:1.5rem;">
+        <label>Matéria para atribuir:</label>
+        <input type="text" id="timer-complete-subj-name" class="form-control" readonly style="opacity:0.8; margin-bottom: 8px;">
+        <label for="timer-complete-comment">Anotações do Foco:</label>
+        <input type="text" id="timer-complete-comment" class="form-control" placeholder="Ex: Concentração total em teoria.">
+      </div>
+      
+      <div style="display:flex; gap:10px;">
+        <button class="btn-outline" style="flex:1;" onclick="closeModal('modal-timer-complete')">Descartar</button>
+        <button class="btn-primary" style="flex:2;" onclick="saveTimerLog()">Registrar Estudo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT LOGIC
+       ========================================================================== -->
+  <!-- JavaScript moved to app.js for better modularity and maintainability -->
+</body>
+</html>

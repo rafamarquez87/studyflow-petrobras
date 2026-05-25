@@ -1,0 +1,44 @@
+/* dashboard_dark.css – Custom Dark Palette */
+:root {
+  --color-background: #1e1e2a;
+  --color-surface: #252535;
+  --color-primary: #5a9eff;
+  --color-on-primary: #ffffff;
+  --color-secondary: #8b5cf6;
+  --color-on-secondary: #ffffff;
+  --color-error: #ff6b6b;
+  --color-on-error: #ffffff;
+  --color-text-primary: #e0e0ff;
+  --color-text-secondary: #c0c0d0;
+  --color-border: #3a3a50;
+}
+
+/* Override existing variables from styles.css */
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+.app-container {
+  background: var(--color-background);
+}
+.glass-panel {
+  background: rgba(37, 37, 53, 0.85);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+}
+.metric-card {
+  background: rgba(38, 38, 54, 0.85);
+  color: var(--color-text-primary);
+}
+/* Adjust scrollbars, inputs, buttons */
+input, select, button {
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+button:hover {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+/* Add any additional dark‑mode specific tweaks here */

@@ -1,0 +1,193 @@
+/* ==========================================================================
+   FORMS STYLES — STUDYFLOW PETROBRAS
+   Input forms & dialog boxes styles
+   ========================================================================== */
+
+/* ==========================================================================
+   FORM GRID
+   ========================================================================== */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.form-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   INPUT GROUPS
+   ========================================================================== */
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* ==========================================================================
+   TEXTAREA
+   ========================================================================== */
+textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* ==========================================================================
+   CHECKBOX
+   ========================================================================== */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.checkbox-group label {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   BUTTON GROUPS
+   ========================================================================== */
+.btn-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn-group .btn-primary,
+.btn-group .btn-outline {
+  flex: 1;
+}
+
+/* ==========================================================================
+   TYPE PILLS (History)
+   ========================================================================== */
+.type-pill {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.type-pill.study {
+  background: var(--color-b1-grad);
+  color: var(--bg-primary);
+}
+
+.type-pill.grade {
+  background: var(--color-basicas-grad);
+  color: var(--bg-primary);
+}
+
+/* ==========================================================================
+   TRASH BUTTON
+   ========================================================================== */
+.trash-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  padding: 0.5rem;
+}
+
+.trash-btn:hover {
+  color: var(--color-danger);
+}
+
+/* ==========================================================================
+   DAY BUTTONS (Schedule)
+   ========================================================================== */
+.day-btn {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.day-btn:hover {
+  border-color: var(--glass-border-hover);
+  color: var(--text-primary);
+}
+
+.day-btn.active {
+  background: var(--color-b1-grad);
+  color: var(--bg-primary);
+  border-color: var(--color-b1);
+}
+
+.day-btns-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   PRIORITY BUTTONS
+   ========================================================================== */
+.pri-btn-alta {
+  background: var(--color-danger);
+  color: white;
+}
+
+.pri-btn-media {
+  background: var(--color-warning);
+  color: var(--bg-primary);
+}
+
+.pri-btn-baixa {
+  background: var(--color-success);
+  color: white;
+}
+
+.pri-btn-all {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+}
+
+.pri-btn-alta.active,
+.pri-btn-media.active,
+.pri-btn-baixa.active,
+.pri-btn-all.active {
+  border-color: var(--color-b1);
+  box-shadow: var(--shadow-neon);
+}
