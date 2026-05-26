@@ -429,7 +429,8 @@
         timer: { title: "Foco & Pomodoro", subtitle: "Inicie sessões de foco isoladas e marque tempos de estudo diretos." },
         history: { title: "Lançamento Manual", subtitle: "Registre suas sessões de estudo offline e resoluções de questões." },
         goals: { title: "Metas & Conquistas", subtitle: "Acompanhe seus dias seguidos, medalhas ganhas e progresso semanal." },
-        settings: { title: "Opções do Painel", subtitle: "Reset de dados, Importação e Exportação do progresso." }
+        settings: { title: "Opções do Painel", subtitle: "Reset de dados, Importação e Exportação do progresso." },
+        resources: { title: "Recursos de Estudo", subtitle: "Livros de referência e cursos preparatórios recomendados." }
       };
 
       document.getElementById('main-view-title').textContent = viewTitles[viewId].title;

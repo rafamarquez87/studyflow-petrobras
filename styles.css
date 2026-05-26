@@ -1754,18 +1754,18 @@ button, input, select, textarea {
    LIGHT THEME OVERRIDES
    ========================================================================== */
 body.light-theme {
-  --bg-primary: #f3f5f9;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #e4eaf3;
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(0, 0, 0, 0.08);
-  --glass-border-hover: rgba(0, 0, 0, 0.15);
+  --bg-primary: #e8eef5;
+  --bg-secondary: #f5f8fc;
+  --bg-tertiary: #dce4ed;
+  --glass-bg: rgba(245, 248, 252, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-border-hover: rgba(0, 0, 0, 0.12);
   
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
   
-  --shadow-neon: 0 8px 32px 0 rgba(0, 242, 254, 0.04);
+  --shadow-neon: 0 8px 32px 0 rgba(0, 242, 254, 0.03);
 }
 
 body.light-theme::before {

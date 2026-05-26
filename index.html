@@ -63,6 +63,10 @@
           <svg viewBox="0 0 24 24" style="width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2;" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
           <span class="nav-text">Configurações</span>
         </li>
+        <li class="nav-link" id="nav-resources" onclick="switchView('resources')" role="button" tabindex="0" aria-label="Recursos de Estudo">
+          <svg viewBox="0 0 24 24" style="width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2;" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5A2.5 2.5 0 0 1 6.5 2.5H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg>
+          <span class="nav-text">Recursos</span>
+        </li>
       </nav>
       
       <!-- Mini Pomodoro Widget -->
@@ -654,6 +658,242 @@
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- ==========================================================================
+           VIEW 7: RESOURCES (LIVROS E CURSOS)
+           ========================================================================== -->
+      <section id="view-resources" class="view-section">
+        <div style="max-width: 1200px; margin: 0 auto;">
+          
+          <h2 style="font-size:1.5rem; margin-bottom:1.5rem; color:var(--text-primary);">
+            📚 Livros de Referência por Bloco
+          </h2>
+          
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem; margin-bottom:3rem;">
+            
+            <!-- Bloco 1 -->
+            <div class="glass-panel">
+              <div style="display:inline-block; font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:4px 10px; border-radius:6px; margin-bottom:1rem; background:rgba(0, 242, 254, 0.15); color:var(--color-b1);">
+                Bloco 1 — Fundamentos elétricos
+              </div>
+              <h3 style="font-size:1rem; font-weight:600; margin-bottom:1rem; color:var(--text-primary);">Eletromagnetismo · Circuitos · Máquinas · SEP</h3>
+              
+              <div style="display:flex; flex-direction:column; gap:1rem;">
+                <div style="display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--glass-border);">
+                  <div style="font-size:1.5rem; flex-shrink:0; margin-top:2px;">⚡</div>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:3px;">Hayt & Buck — Eletromagnetismo</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:6px; line-height:1.5;">Teoria eletromagnética completa, campos, Maxwell, ondas</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(82, 201, 126, 0.15); color:var(--color-success);">PT-BR</span>
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(91, 141, 238, 0.15); color:var(--color-b1);">didático</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div style="display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--glass-border);">
+                  <div style="font-size:1.5rem; flex-shrink:0; margin-top:2px;">🔌</div>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:3px;">Sadiku & Alexander — Fundamentos de Circuitos Elétricos</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:6px; line-height:1.5;">CC, CA monofásico e trifásico, fasores, potência</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(82, 201, 126, 0.15); color:var(--color-success);">PT-BR</span>
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(248, 81, 73, 0.15); color:var(--color-danger);">mais cobrado</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div style="display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--glass-border);">
+                  <div style="font-size:1.5rem; flex-shrink:0; margin-top:2px;">⚙️</div>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:3px;">Chapman — Fundamentos de Máquinas Elétricas</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:6px; line-height:1.5;">Transformador, síncrona, indução, CC — tudo em um só livro</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(82, 201, 126, 0.15); color:var(--color-success);">PT-BR</span>
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(248, 81, 73, 0.15); color:var(--color-danger);">referência absoluta</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div style="display:flex; align-items:flex-start; gap:12px; padding:12px 0;">
+                  <div style="font-size:1.5rem; flex-shrink:0; margin-top:2px;">🏭</div>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:3px;">Stevenson & Grainger — Análise de Sistemas de Potência</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:6px; line-height:1.5;">p.u., componentes simétricas, modelagem, faltas simétricas e assimétricas</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(82, 201, 126, 0.15); color:var(--color-success);">PT-BR</span>
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(248, 81, 73, 0.15); color:var(--color-danger);">mais cobrado</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Bloco 2 -->
+            <div class="glass-panel">
+              <div style="display:inline-block; font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:4px 10px; border-radius:6px; margin-bottom:1rem; background:rgba(232, 197, 71, 0.15); color:var(--color-b2);">
+                Bloco 2 — Sistemas, instalações e eletrônica
+              </div>
+              <h3 style="font-size:1rem; font-weight:600; margin-bottom:1rem; color:var(--text-primary);">Geração · Transmissão · Instalações · Eletrônica</h3>
+              
+              <div style="display:flex; flex-direction:column; gap:1rem;">
+                <div style="display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--glass-border);">
+                  <div style="font-size:1.5rem; flex-shrink:0; margin-top:2px;">🏗️</div>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:3px;">Stevenson & Grainger — Análise de SEP</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:6px; line-height:1.5;">Geração, transmissão, distribuição, proteção de sistemas</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(82, 201, 126, 0.15); color:var(--color-success);">PT-BR</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div style="display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--glass-border);">
+                  <div style="font-size:1.5rem; flex-shrink:0; margin-top:2px;">🏠</div>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:3px;">Niskier & Macintyre — Instalações Elétricas</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:6px; line-height:1.5;">BT e MT, aterramento, proteção, medidas elétricas</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(82, 201, 126, 0.15); color:var(--color-success);">PT-BR</span>
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(248, 81, 73, 0.15); color:var(--color-danger);">mais cobrado</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div style="display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--glass-border);">
+                  <div style="font-size:1.5rem; flex-shrink:0; margin-top:2px;">💻</div>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:3px;">Boylestad & Nashelsky — Eletrônica: Teoria de Circuitos</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:6px; line-height:1.5;">Eletrônica analógica e digital completa</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(82, 201, 126, 0.15); color:var(--color-success);">PT-BR</span>
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(91, 141, 238, 0.15); color:var(--color-b1);">clássico</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div style="display:flex; align-items:flex-start; gap:12px; padding:12px 0;">
+                  <div style="font-size:1.5rem; flex-shrink:0; margin-top:2px;">🔋</div>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:3px;">Mohan, Undeland & Robbins — Power Electronics</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:6px; line-height:1.5;">Eletrônica de potência, conversores, acionamentos</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(248, 81, 73, 0.15); color:var(--color-danger);">Inglês</span>
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(91, 141, 238, 0.15); color:var(--color-b1);">referência mundial</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Bloco 3 -->
+            <div class="glass-panel">
+              <div style="display:inline-block; font-size:0.75rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:4px 10px; border-radius:6px; margin-bottom:1rem; background:rgba(247, 147, 76, 0.15); color:var(--color-b3);">
+                Bloco 3 — Matemática, controle e fluidos
+              </div>
+              <h3 style="font-size:1rem; font-weight:600; margin-bottom:1rem; color:var(--text-primary);">Cálculo · Controle · Termodinâmica · Fluidos</h3>
+              
+              <div style="display:flex; flex-direction:column; gap:1rem;">
+                <div style="display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--glass-border);">
+                  <div style="font-size:1.5rem; flex-shrink:0; margin-top:2px;">📐</div>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:3px;">Stewart — Cálculo (Vol. 1 e 2)</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:6px; line-height:1.5;">Diferencial, integral, multivariável, vetorial, EDO, álgebra linear</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(82, 201, 126, 0.15); color:var(--color-success);">PT-BR</span>
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(248, 81, 73, 0.15); color:var(--color-danger);">mais cobrado</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div style="display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--glass-border);">
+                  <div style="font-size:1.5rem; flex-shrink:0; margin-top:2px;">🎛️</div>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:3px;">Ogata — Engenharia de Controle Moderno</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:6px; line-height:1.5;">Laplace, funções de transferência, estabilidade, malha aberta/fechada</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(82, 201, 126, 0.15); color:var(--color-success);">PT-BR</span>
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(248, 81, 73, 0.15); color:var(--color-danger);">referência absoluta</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div style="display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--glass-border);">
+                  <div style="font-size:1.5rem; flex-shrink:0; margin-top:2px;">💧</div>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:3px;">Çengel & Cimbala — Mecânica dos Fluidos</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:6px; line-height:1.5;">Fenômenos de transporte, bombas, compressores, turbinas</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(82, 201, 126, 0.15); color:var(--color-success);">PT-BR</span>
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(91, 141, 238, 0.15); color:var(--color-b1);">didático</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div style="display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--glass-border);">
+                  <div style="font-size:1.5rem; flex-shrink:0; margin-top:2px;">🔥</div>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:3px;">Çengel & Boles — Termodinâmica</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:6px; line-height:1.5;">Leis, ciclos térmicos, turbinas a gás e vapor, compressores</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(82, 201, 126, 0.15); color:var(--color-success);">PT-BR</span>
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(248, 81, 73, 0.15); color:var(--color-danger);">mais cobrado no B3</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div style="display:flex; align-items:flex-start; gap:12px; padding:12px 0;">
+                  <div style="font-size:1.5rem; flex-shrink:0; margin-top:2px;">📊</div>
+                  <div>
+                    <div style="font-size:0.9rem; font-weight:600; color:var(--text-primary); margin-bottom:3px;">Wackerly — Estatística e Probabilidade</div>
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:6px; line-height:1.5;">Probabilidade, distribuições, inferência estatística</div>
+                    <div style="display:flex; flex-wrap:wrap; gap:5px;">
+                      <span style="font-size:0.7rem; padding:2px 8px; border-radius:99px; font-weight:600; background:rgba(248, 81, 73, 0.15); color:var(--color-danger);">Inglês / PT-BR parcial</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <h2 style="font-size:1.5rem; margin-bottom:1.5rem; color:var(--text-primary);">
+            🎓 Cursos Preparatórios Recomendados
+          </h2>
+          
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1.5rem;">
+            <div class="glass-panel">
+              <h3 style="font-size:1rem; font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Exatas Concursos</h3>
+              <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem; line-height:1.5;">Apostilas e resoluções feitas por engenheiros aprovados na Petrobras Elétrica. Foco cirúrgico no que cai.</p>
+              <a href="https://exatas.com.br" target="_blank" style="font-size:0.8rem; color:var(--color-b1); text-decoration:none;">→ exatas.com.br</a>
+            </div>
+            
+            <div class="glass-panel">
+              <h3 style="font-size:1rem; font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Tesla Concursos</h3>
+              <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem; line-height:1.5;">Apostilas autorais, banco de questões atualizado e trilha de estudos por disciplina. Resolução de provas anteriores da Petrobras com professor.</p>
+              <a href="https://www.teslaconcursos.com.br" target="_blank" style="font-size:0.8rem; color:var(--color-b1); text-decoration:none;">→ teslaconcursos.com.br</a>
+            </div>
+            
+            <div class="glass-panel">
+              <h3 style="font-size:1rem; font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">CPWS Concursos</h3>
+              <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem; line-height:1.5;">Especializado em Petrobras/Transpetro. Aulas ao vivo + gravadas, suporte via WhatsApp. Taxa de aprovação de 1 a cada 4 alunos.</p>
+              <a href="https://cpwsconcursos.com.br/petrobras-superior-engenharia-de-equipamentos-eletrica/" target="_blank" style="font-size:0.8rem; color:var(--color-b1); text-decoration:none;">→ cpwsconcursos.com.br</a>
+            </div>
+            
+            <div class="glass-panel">
+              <h3 style="font-size:1rem; font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Estratégia Concursos</h3>
+              <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem; line-height:1.5;">Material do zero ao avançado com teoria e questões comentadas de provas anteriores. Maior plataforma do Brasil.</p>
+              <a href="https://www.estrategiaconcursos.com.br/cursosPorConcurso/petrobras-58/" target="_blank" style="font-size:0.8rem; color:var(--color-b1); text-decoration:none;">→ estrategiaconcursos.com.br</a>
+            </div>
+            
+            <div class="glass-panel">
+              <h3 style="font-size:1rem; font-weight:600; margin-bottom:0.5rem; color:var(--text-primary);">Provas anteriores (grátis)</h3>
+              <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem; line-height:1.5;">Download de todas as provas Petrobras Elétrica anteriores com gabarito. Método de estudo reverso — resolva primeiro, estude depois.</p>
+              <a href="https://www.pciconcursos.com.br/provas/petrobras-eletrica" target="_blank" style="font-size:0.8rem; color:var(--color-b1); text-decoration:none;">→ pciconcursos.com.br</a>
+            </div>
+          </div>
+          
         </div>
       </section>
 
