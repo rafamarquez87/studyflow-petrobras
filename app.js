@@ -6,6 +6,93 @@
       return div.innerHTML;
     }
 
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(error => {
+            console.log('Service Worker registration failed:', error);
+          });
+      });
+    }
+
+    // Enhanced Data Persistence with Auto Backup
+    const STORAGE_KEY = 'studyflow_data';
+    const BACKUP_KEY = 'studyflow_backup';
+
+    function saveState() {
+      const data = JSON.stringify(state);
+      localStorage.setItem(STORAGE_KEY, data);
+      
+      // Auto backup every save
+      const backupData = JSON.stringify({
+        data: state,
+        timestamp: new Date().toISOString(),
+        version: '1.0'
+      });
+      localStorage.setItem(BACKUP_KEY, backupData);
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          state = { ...state, ...parsed };
+          return true;
+        } catch (e) {
+          console.error('Error loading state:', e);
+          return false;
+        }
+      }
+      return false;
+    }
+
+    function restoreBackup() {
+      const backup = localStorage.getItem(BACKUP_KEY);
+      if (backup) {
+        try {
+          const parsed = JSON.parse(backup);
+          if (parsed.data && confirm(`Deseja restaurar o backup de ${new Date(parsed.timestamp).toLocaleString()}?`)) {
+            state = { ...state, ...parsed.data };
+            saveState();
+            location.reload();
+          }
+        } catch (e) {
+          console.error('Error restoring backup:', e);
+        }
+      }
+    }
+
+    // Push Notifications
+    function requestNotificationPermission() {
+      if ('Notification' in window) {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            console.log('Notification permission granted');
+          }
+        });
+      }
+    }
+
+    function showNotification(title, body) {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification(title, {
+          body: body,
+          icon: '/icons/icon-192x192.svg',
+          badge: '/icons/icon-192x192.svg'
+        });
+      }
+    }
+
+    // Request notification permission on load
+    if ('Notification' in window && Notification.permission === 'default') {
+      requestNotificationPermission();
+    }
+
     // Global State
     let state = {
       subjects: [],
