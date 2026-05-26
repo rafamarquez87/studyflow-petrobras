@@ -6,35 +6,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Dark color palette */
-  --bg-primary: #070913;
-  --bg-secondary: #0d1124;
-  --bg-tertiary: #141a34;
-  --glass-bg: rgba(13, 17, 36, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.06);
-  --glass-border-hover: rgba(255, 255, 255, 0.12);
+  /* Dark color palette - Enhanced vibrancy */
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #111827;
+  --bg-tertiary: #1f2937;
+  --glass-bg: rgba(17, 24, 39, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(255, 255, 255, 0.15);
   
-  /* Text colors */
-  --text-primary: #f1f3f9;
-  --text-secondary: #8e9bb4;
-  --text-muted: #5e6b8c;
+  /* Text colors - Better contrast */
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
   
-  /* Accents per exam block & status */
-  --color-b1: #00f2fe; /* Ciano Neon (Bloco 1) */
-  --color-b1-grad: linear-gradient(135deg, #00c6ff, #00f2fe);
+  /* Accents per exam block & status - More vibrant */
+  --color-b1: #06b6d4; /* Ciano Vibrante (Bloco 1) */
+  --color-b1-grad: linear-gradient(135deg, #0891b2, #06b6d4);
   
-  --color-b2: #e8c547; /* Amarelo Ouro (Bloco 2) */
-  --color-b2-grad: linear-gradient(135deg, #ffd000, #e8c547);
+  --color-b2: #fbbf24; /* Amarelo Solar (Bloco 2) */
+  --color-b2-grad: linear-gradient(135deg, #f59e0b, #fbbf24);
   
-  --color-b3: #f7934c; /* Laranja Energético (Bloco 3) */
-  --color-b3-grad: linear-gradient(135deg, #ff7b24, #f7934c);
+  --color-b3: #f97316; /* Laranja Intenso (Bloco 3) */
+  --color-b3-grad: linear-gradient(135deg, #ea580c, #f97316);
   
-  --color-basicas: #a78bfa; /* Violeta/Lilás (Básicas) */
-  --color-basicas-grad: linear-gradient(135deg, #8b5cf6, #a78bfa);
+  --color-basicas: #8b5cf6; /* Violeta Profundo (Básicas) */
+  --color-basicas-grad: linear-gradient(135deg, #7c3aed, #8b5cf6);
   
-  --color-success: #10b981; /* Verde Menta (Desempenho bom) */
-  --color-warning: #f59e0b; /* Laranja/Amarelo */
-  --color-danger: #ef4444; /* Vermelho/Coral (Desempenho ruim) */
+  --color-success: #22c55e; /* Verde Vibrante (Desempenho bom) */
+  --color-warning: #eab308; /* Amarelo Intenso */
+  --color-danger: #ef4444; /* Vermelho Vibrante (Desempenho ruim) */
   
   /* Layout specifications */
   --sidebar-width: 280px;
@@ -42,7 +42,7 @@
   --radius-lg: 20px;
   --radius-md: 12px;
   --radius-sm: 8px;
-  --shadow-neon: 0 8px 32px 0 rgba(0, 242, 254, 0.08);
+  --shadow-neon: 0 8px 32px 0 rgba(6, 182, 212, 0.12);
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
